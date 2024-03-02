@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5ZCePuT4yCaI7N+u2c05AhstJpSbbdgoWPCKcwNszxYMdam/xhRsNsU2SL8dXonDBQ9Q1H2VfUJuMzu9HQX7gg==",
+  "dgSpecHash": "wb3i5YNY74KYyfewDrHsyDxP5StDEbQuYzfrf1rHAAUq9aCGY+BJREBWJhy97kuzuKrRMgLdeJC0h5d2n10UwQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\bayra\\Desktop\\API\\RestApi\\RestApi.csproj",
+  "projectFilePath": "C:\\Users\\bayra\\Desktop\\Courses\\TUSAS\\RestApi\\RestApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bayra\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\bayra\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -26,7 +26,10 @@
     "C:\\Users\\bayra\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.7.0\\system.security.cryptography.protecteddata.4.7.0.nupkg.sha512",
     "C:\\Users\\bayra\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\bayra\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
-    "C:\\Users\\bayra\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
+    "C:\\Users\\bayra\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
+    "C:\\Users\\bayra\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.2\\microsoft.netcore.app.runtime.win-x64.8.0.2.nupkg.sha512",
+    "C:\\Users\\bayra\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.2\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.2.nupkg.sha512",
+    "C:\\Users\\bayra\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.2\\microsoft.aspnetcore.app.runtime.win-x64.8.0.2.nupkg.sha512"
   ],
   "logs": []
 }

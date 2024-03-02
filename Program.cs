@@ -15,11 +15,11 @@ app.MapGet("/", () => @"REST API to perform Create, Read, Update and Delete meth
 +--------+----------------------+-----------------------------+---------------+----------------+
 |        | API                  | Description                 | Request Body  | Response Body  |
 +--------+----------------------+-----------------------------+---------------+----------------+
-| CREATE | /AddEmployee         | Add a new employee          | Employee item | Employee item  |
+| CREATE | /AddEmployee         | Add a new employee          | None          | Employee item  |
 +--------+----------------------+-----------------------------+---------------+----------------+
 | READ   | /ListEmployee/{id}   | Get employee by id          | None          | Employee item  |
 +--------+----------------------+-----------------------------+---------------+----------------+
-| UDATE  | /UpdateEmployee/{id} | Update an existing employee | Employee item | Employee item  |
+| UDATE  | /UpdateEmployee/{id} | Update an existing employee | None          | Employee item  |
 +--------+----------------------+-----------------------------+---------------+----------------+
 | DELETE | /DeleteEmployee/{id} | Delete an employee          | None          | None           |
 +--------+----------------------+-----------------------------+---------------+----------------+
@@ -37,6 +37,9 @@ Example Employee object:
   ""Gender"": ""Male"",
   ""Salary"": 66000
 }
+
+
+http://localhost:5000/AddEmployee?FirstName=Emre&LastName=Bayraktar&DateOfBirth=2001-08-16&Gender=Male&Salary=66000
 
 ");
 
@@ -71,74 +74,74 @@ app.MapGet("/ListEmployee/{id}", async (HttpContext context, int id) => {
 });
 
 
-
-// To add a new employee
+// To ass a new employee
 app.MapGet("/AddEmployee", async (HttpContext context) =>
 {
-    // Read the JSON data from the request body
-    var requestStream = context.Request.Body;
+    // Retrieve employee details from URL parameters
+    var firstName = context.Request.Query["FirstName"].ToString();
+    var lastName = context.Request.Query["LastName"].ToString();
+    var dateOfBirth = context.Request.Query["DateOfBirth"].ToString();
+    var gender = context.Request.Query["Gender"].ToString();
+    var salaryStr = context.Request.Query["Salary"].ToString();
 
-    using (var reader = new StreamReader(requestStream))
+    // Convert salary to integer (you might want to add validation here)
+    int salary = int.TryParse(salaryStr, out int parsedSalary) ? parsedSalary : 0;
+
+    // Create a new employee object
+    var newEmployee = new Employee
     {
-        var requestBody = await reader.ReadToEndAsync();
+        FirstName = firstName,
+        LastName = lastName,
+        DateOfBirth = dateOfBirth,
+        Gender = gender,
+        Salary = salary
+    };
 
-        // Deserialize the JSON data into an Employee object
-        var newEmployee = JsonSerializer.Deserialize<Employee>(requestBody, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true  // Disable case sensitivity
-        });
+    // Save the new employee data
+    dataAccess.CreateEmployee(newEmployee);
 
-        // Save the new employee data
-        dataAccess.CreateEmployee(newEmployee);
+    // Return the created employee data
+    context.Response.StatusCode = 201; // Created
+    context.Response.Headers.Add("Content-Type", "application/json");
 
-        // Return the created employee data
-        context.Response.StatusCode = 201; // Created
-        context.Response.Headers.Add("Content-Type", "application/json");
+    var jsonResponse = JsonSerializer.Serialize(newEmployee, new JsonSerializerOptions { WriteIndented = true });
 
-        var jsonResponse = JsonSerializer.Serialize(newEmployee, new JsonSerializerOptions{WriteIndented = true});
-
-        await context.Response.WriteAsync(jsonResponse);
-    }
+    await context.Response.WriteAsync(jsonResponse);
 });
 
 
 
-// To update specified employee
+
 app.MapGet("/UpdateEmployee/{id}", async (HttpContext context, int id) =>
 {
-    // Read the JSON data from the request body
-    var requestStream = context.Request.Body;
+    // Retrieve update fields from URL parameters
+    var updatedFields = new Dictionary<string, object>();
 
-    using (var reader = new StreamReader(requestStream))
+    foreach (var queryParameter in context.Request.Query)
     {
-        var requestBody = await reader.ReadToEndAsync();
-
-        // Deserialize the JSON data into an Employee object
-        var updatedFields = JsonSerializer.Deserialize<Dictionary<string, object>>(requestBody, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true // Disable case sensitivity
-        });
-
-        // Update the employee data
-        var isSuccess = dataAccess.UpdateEmployee(id, updatedFields);
-
-        if (!isSuccess)
-        {
-            context.Response.StatusCode = 404; // Not Found
-            await context.Response.WriteAsync("Employee not found");
-            return;
-        }
-
-        // Return the updated employee data
-        context.Response.Headers.Add("Content-Type", "application/json");
-
-        var updatedEmployee = dataAccess.GetEmployee(id);
-
-        var jsonResponse = JsonSerializer.Serialize(updatedEmployee, new JsonSerializerOptions{WriteIndented = true});
-
-        await context.Response.WriteAsync(jsonResponse);
+        updatedFields.Add(queryParameter.Key, queryParameter.Value);
     }
+
+    // Update the employee data
+    var isSuccess = dataAccess.UpdateEmployee(id, updatedFields);
+
+    if (!isSuccess)
+    {
+        context.Response.StatusCode = 404; // Not Found
+        await context.Response.WriteAsync("Employee not found");
+        return;
+    }
+
+    // Return the updated employee data
+    context.Response.Headers.Add("Content-Type", "application/json");
+
+    var updatedEmployee = dataAccess.GetEmployee(id);
+
+    var jsonResponse = JsonSerializer.Serialize(updatedEmployee, new JsonSerializerOptions { WriteIndented = true });
+
+    await context.Response.WriteAsync(jsonResponse);
 });
+
 
 
 
