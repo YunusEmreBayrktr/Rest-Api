@@ -74,17 +74,16 @@ app.MapGet("/ListEmployee/{id}", async (HttpContext context, int id) => {
 });
 
 
-// To ass a new employee
+// To add a new employee
 app.MapGet("/AddEmployee", async (HttpContext context) =>
 {
-    // Retrieve employee details from URL parameters
+    // Retrieve employee details
     var firstName = context.Request.Query["FirstName"].ToString();
     var lastName = context.Request.Query["LastName"].ToString();
     var dateOfBirth = context.Request.Query["DateOfBirth"].ToString();
     var gender = context.Request.Query["Gender"].ToString();
     var salaryStr = context.Request.Query["Salary"].ToString();
 
-    // Convert salary to integer (you might want to add validation here)
     int salary = int.TryParse(salaryStr, out int parsedSalary) ? parsedSalary : 0;
 
     // Create a new employee object
@@ -114,7 +113,7 @@ app.MapGet("/AddEmployee", async (HttpContext context) =>
 
 app.MapGet("/UpdateEmployee/{id}", async (HttpContext context, int id) =>
 {
-    // Retrieve update fields from URL parameters
+    // Retrieve update fields
     var updatedFields = new Dictionary<string, object>();
 
     foreach (var queryParameter in context.Request.Query)
@@ -159,7 +158,7 @@ app.MapGet("/DeleteEmployee/{id}", async (HttpContext context, int id) =>
     }
 
     // Return a response indicating successful deletion
-    context.Response.StatusCode = 200; // OK status code
+    context.Response.StatusCode = 200; // OK 
     await context.Response.WriteAsync("Employee deleted successfully");
 });
 
