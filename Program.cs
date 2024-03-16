@@ -4,6 +4,7 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 DataAccess dataAccess = new DataAccess();
+BusinessLayer businessLayer = new BusinessLayer(dataAccess);
 
 
 
@@ -47,7 +48,7 @@ http://localhost:5000/AddEmployee?FirstName=Emre&LastName=Bayraktar&DateOfBirth=
 // To get all employees
 app.MapGet("/ListEmployee", () => {
 
-    List<Employee> allEmployees = dataAccess.GetAllEmployees();
+    List<Employee> allEmployees = businessLayer.GetAllEmployees();
     return JsonSerializer.Serialize(allEmployees, new JsonSerializerOptions { WriteIndented = true });
 });
 
@@ -97,7 +98,13 @@ app.MapGet("/AddEmployee", async (HttpContext context) =>
     };
 
     // Save the new employee data
-    dataAccess.CreateEmployee(newEmployee);
+    bool isSuccess = businessLayer.CreateEmployee(newEmployee);
+
+    if (!isSuccess){
+        context.Response.StatusCode = 400; // Bad Request
+        await context.Response.WriteAsync("Employee is under the age of 18.");
+        return;
+    }
 
     // Return the created employee data
     context.Response.StatusCode = 201; // Created
