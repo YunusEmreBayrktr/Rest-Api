@@ -3,9 +3,11 @@ using System.Text;
 
 public class DataAccess
 {
-    private readonly string connectionString = "Data Source=SampleDB.db;Version=3;";
+    private readonly string connectionString ;
 
-
+    public DataAccess(string connectionString){
+        this.connectionString = connectionString;
+    }
 
     public List<Employee> GetAllEmployees(){
 

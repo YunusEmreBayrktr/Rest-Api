@@ -3,7 +3,7 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
-DataAccess dataAccess = new DataAccess();
+DataAccess dataAccess = new DataAccess("Data Source=SampleDB.db;Version=3;");
 BusinessLayer businessLayer = new BusinessLayer(dataAccess);
 
 

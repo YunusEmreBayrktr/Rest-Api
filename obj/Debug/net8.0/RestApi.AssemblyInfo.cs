@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RestApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44dc2e48a8338b56bfdc45b86e437979126064f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a87f5572bf62256dfbf5422b04ed4d12fbe943e")]
 [assembly: System.Reflection.AssemblyProductAttribute("RestApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RestApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
